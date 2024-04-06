@@ -117,5 +117,3 @@ def check_reaction_and_author(message, author, emoji):
         return user == author and str(reaction.emoji) == emoji
     return check
 
-# Replace 'YOUR_BOT_TOKEN' with your actual bot token
-client.run('MTIyNTA1MjA3MDMyODE0NDAxMw.GRPLxE.c6-UseTqPJ3TF8QzrPxQcGJFNP1pxX5Z2gL6mQ')
