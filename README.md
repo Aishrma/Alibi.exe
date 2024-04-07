@@ -46,7 +46,7 @@ Our goal is to provide Discord users with a fun and engaging gaming experience w
   * github
   * canva
 * Backend
-  * server_website
+  * pylexnodes.net
 
 # How to run
 ## To set up the bot in yourlocal machine, follow these instructions:
