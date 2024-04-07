@@ -79,6 +79,21 @@ words = [
     "clueless","eerie","enigmatic","foreboding","intrigue", "mystery", "sleuth", "suspicion", "sleuthing"
 ]
 
+
+caesar_texts = {
+    "Encoded text: Khoor, zruog\nShift amount: 3\nPlease enter the correct decoded text.": (3, "Hello, world"),
+    "Encoded text: Wklv lv d whvw phvvdjh!\nShift amount: 3\nPlease enter the correct decoded text.": (3, "This is a test message!"),
+    "Encoded text: Hfjxfw hnumjw nx!\nShift amount: 5\nPlease enter the correct decoded text.": (5, "Caesar cipher is!"),
+    "Encoded text: Hqfubswlrq zrunv!\nShift amount: 3\nPlease enter the correct decoded text.": (3, "Encryption works!"),
+    "Encoded text: Yk yqeemsq ue!\nShift amount: 12\nPlease enter the correct decoded text.": (12, "My message is!"),
+    "Encoded text: Zpv bsf wfsz ojdf qfstpo!\nShift amount: 1\nPlease enter the correct decoded text.": (1, "You are very nice person!"),
+    "Encoded text: Zngtqy lux vrgeotm!\nShift amount: 0\nPlease enter the correct decoded text.": (6, "Thanks for playing!"),
+    "Encoded text: Ghwhuplqh wkh hqfubswlrq phwkrg!\nShift amount: 3\nPlease enter the correct decoded text.": (3, "Determine the encryption method!"),
+    "Encoded text: Xlmw fsx mw fewih sr Evgehi Xliqi\nShift amount: 4\nPlease enter the correct decoded text.": (4, "This bot is based on Arcade Theme"),
+    "Encoded text: Pevpxrg vf n tbbq fcbeg!\nShift amount: 13\nPlease enter the correct decoded text.": (13, "Cricket is a good sport!"),
+}
+
+
 # Hangman art
 hangman_art = ["images_hangman/h0.jpg",
     "images_hangman/h1.jpg",
@@ -112,6 +127,7 @@ async def start(ctx):
     await ctx.send("2. Scramble", file=discord.File(first_list[4]))
     await ctx.send("3. Hangman", file=discord.File(first_list[1]))
     await ctx.send("4. Morse Decoder", file=discord.File(first_list[2]))
+    await ctx.send("5. Caesar Cipher", file=discord.File(first_list[0]))
 
     def check(message):
         return message.author == ctx.author and message.channel == ctx.channel
@@ -126,10 +142,12 @@ async def start(ctx):
             await scramble(ctx)
         elif choice == 3:
             await start_hangman(ctx)
-        elif choice ==4:
+        elif choice == 4:
             await morse(ctx)
+        elif choice == 5:
+            await caesar(ctx)
         else:
-            await ctx.send("Invalid choice. Please enter either '1', '2', or '3'.")
+            await ctx.send("Invalid choice. Please enter either '1', '2', '3','4' or '5.")
     except asyncio.TimeoutError:
         await ctx.send("Sorry, you took too long to respond. Please try again.")
 
@@ -341,16 +359,15 @@ async def guess(ctx, letter):
                 await ctx.send(f"Wrong guess! \n" , file=discord.File(hangman_art[wrong]))
         else:
             await ctx.send("Right guess!")
-            await ctx.send(updated_word)
+            await ctx.send("```css\n{}\n```".format(updated_word))
 
 async def morse(ctx):
     count = 0
     for _ in range(5):
         # Randomly select a phrase from the dictionary
         phrase, morse_text = random.choice(list(morse_phrases.items()))
-        
-        await ctx.send(f'Your Morse code is: {morse_text}')
 
+        await ctx.send("```css\n{}\n```".format(morse_text))
         def check(msg):
             return msg.author == ctx.author and msg.channel == ctx.channel
 
@@ -369,6 +386,33 @@ async def morse(ctx):
 
     await ctx.send(f"The game has ended after 5 rounds. Your total score is {count} points.\nThanks for playing!")
 
+
+async def caesar(ctx):
+    attempts = 5
+    count = 0
+    for _ in range(attempts):
+        # Randomly select a text from the dictionary
+        encoded_text, (shift, decoded_text) = random.choice(list(caesar_texts.items()))
+
+        await ctx.send(encoded_text)
+
+        def check(msg):
+            return msg.author == ctx.author and msg.channel == ctx.channel
+
+        try:
+            response = await client.wait_for('message', check=check, timeout=100)
+            if response.content.strip().lower() == "exit":
+                await ctx.send("Game ended.")
+                break
+            elif response.content.strip().lower() == decoded_text.lower():
+                count = count + 1
+                await ctx.send("Correct! You win this round!")
+            else:
+                await ctx.send(f"Incorrect! The correct answer was: {decoded_text}")
+        except asyncio.TimeoutError:
+            await ctx.send("Time's up for this round! You lose.")
+
+    await ctx.send("```css\n```The game has ended after 5 rounds.Your total score is {} points.\nThanks for playing!".format(count))
 
 
 client.run(os.getenv('TOKEN'))
