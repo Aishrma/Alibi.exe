@@ -1,0 +1,9 @@
+hangman_list=[
+    "images_hangman/h0.jpg",
+    "images_hangman/h1.jpg",
+    "images_hangman/h2.jpg",
+    "images_hangman/h3.jpg",
+    "images_hangman/h4.jpg",
+    "images_hangman/h5.jpg",
+    "images_hangman/h6.jpg"
+]
