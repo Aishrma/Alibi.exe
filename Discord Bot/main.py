@@ -6,9 +6,12 @@ import asyncio
 from dotenv import load_dotenv
 from questions import questions_list
 from storylines import title, description_victim, description_crime_scene, items, autopsy_report, forensic_report, backstories, alibis, description_alibis, witnesses, distance, answer, solution, suspects
+from jumbled_words import jumbled_list
 from href_crimescenes import images_list
 from href_sync import sync_list
 from href_title import title_list
+from href_first import first_list
+from href_hangman import hangman_list
 
 load_dotenv()
 
@@ -26,7 +29,33 @@ async def on_ready():
 
 
 @client.command()
+
 async def start(ctx):
+
+    await ctx.send('''Hey! Welcome to the world of puzzles! Choose the type of puzzle you want to solve today by entering the corresponding number, Don't forget to check out the heart of our bot, "The Murder Mystery" for some detective fun!''')
+
+    await ctx.send("1.Murder Mystery" , file=discord.File(first_list[3]))
+
+    await ctx.send("2.Scramble" , file=discord.File(first_list[4]))
+
+    await ctx.send("3.Hangman" , file=discord.File(first_list[1]))
+
+    await ctx.send("4.Caesar Cipher" , file=discord.File(first_list[0]))
+
+    await ctx.send("5.Morse Code" , file=discord.File(first_list[2]))
+
+    def checkj(message):
+        return message.author == ctx.author and message.channel == ctx.channel
+
+    try:
+        user_msg1 = await client.wait_for('message', check=checkj, timeout=30)
+        global j
+        j = int(user_msg1.content)
+
+    except asyncio.TimeoutError:
+        await ctx.send("Sorry, you took too long to respond. Please try again.")
+
+
     await ctx.send('''Welcome detective! Alibi has got some cases for you to solve. Put your thinking hats on and once you are ready, enter the number corresponding to the mystery you want to solve today''')
 
     await ctx.send("1.The Enigma of the Midnight Manor" , file=discord.File(sync_list[0]))
