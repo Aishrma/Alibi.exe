@@ -71,7 +71,7 @@ The discord bot is deployed on __________
 * Community Building: Hosting detective game events on Discord can help foster a sense of community and engagement among server members.
 
 # Further improvements
-* We would like to add the following features to our bot:
+We would like to add the following features to our bot:
 * Player Profiles: Implement player profiles to track progress, achievements, and leaderboard rankings.
 * Multiplayer Mode: Introduce multiplayer functionality to allow multiple users to collaborate or compete in solving cases together.
 
