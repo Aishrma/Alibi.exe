@@ -81,16 +81,16 @@ words = [
 
 
 caesar_texts = {
-    "Encoded text: Khoor, zruog\nShift amount: 3\nPlease enter the correct decoded text.": (3, "Hello, world"),
-    "Encoded text: Wklv lv d whvw phvvdjh!\nShift amount: 3\nPlease enter the correct decoded text.": (3, "This is a test message!"),
-    "Encoded text: Hfjxfw hnumjw nx!\nShift amount: 5\nPlease enter the correct decoded text.": (5, "Caesar cipher is!"),
-    "Encoded text: Hqfubswlrq zrunv!\nShift amount: 3\nPlease enter the correct decoded text.": (3, "Encryption works!"),
-    "Encoded text: Yk yqeemsq ue!\nShift amount: 12\nPlease enter the correct decoded text.": (12, "My message is!"),
-    "Encoded text: Zpv bsf wfsz ojdf qfstpo!\nShift amount: 1\nPlease enter the correct decoded text.": (1, "You are very nice person!"),
-    "Encoded text: Zngtqy lux vrgeotm!\nShift amount: 0\nPlease enter the correct decoded text.": (6, "Thanks for playing!"),
-    "Encoded text: Ghwhuplqh wkh hqfubswlrq phwkrg!\nShift amount: 3\nPlease enter the correct decoded text.": (3, "Determine the encryption method!"),
-    "Encoded text: Xlmw fsx mw fewih sr Evgehi Xliqi\nShift amount: 4\nPlease enter the correct decoded text.": (4, "This bot is based on Arcade Theme"),
-    "Encoded text: Pevpxrg vf n tbbq fcbeg!\nShift amount: 13\nPlease enter the correct decoded text.": (13, "Cricket is a good sport!"),
+    "Encoded text: Khoor\nShift amount: 3\nPlease enter the correct decoded text.": (3, "Hello"),
+    "Encoded text: whvw\nShift amount: 3\nPlease enter the correct decoded text.": (3, "test"),
+    "Encoded text:  hnumjw \nShift amount: 5\nPlease enter the correct decoded text.": (5, "cipher"),
+    "Encoded text: Hqfubswlrq \nShift amount: 3\nPlease enter the correct decoded text.": (3, "Encryption"),
+    "Encoded text: yqeemsq\nShift amount: 12\nPlease enter the correct decoded text.": (12, "message"),
+    "Encoded text: qfstpo\nShift amount: 1\nPlease enter the correct decoded text.": (1, " person"),
+    "Encoded text: vrgeotm\nShift amount: 0\nPlease enter the correct decoded text.": (6, "playing"),
+    "Encoded text: hqfubswlrq\nShift amount: 3\nPlease enter the correct decoded text.": (3, "encryption "),
+    "Encoded text: Evgehi\nShift amount: 4\nPlease enter the correct decoded text.": (4, "Arcade"),
+    "Encoded text: Pevpxrg \nShift amount: 13\nPlease enter the correct decoded text.": (13, "Cricket"),
 }
 
 
@@ -359,6 +359,7 @@ async def guess(ctx, letter):
                 await ctx.send(f"Wrong guess! \n" , file=discord.File(hangman_art[wrong]))
         else:
             await ctx.send("Right guess!")
+            await ctx.send(updated_word)
             await ctx.send("```css\n{}\n```".format(updated_word))
 
 async def morse(ctx):
