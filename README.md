@@ -63,7 +63,7 @@ This will prompt the user to select their desired game.
 Enter the number of your choice and continue with the game.
 
 # Deployment
-The discord bot is deployed on __________
+The discord bot is deployed on Github and Discord.
 
 # Applications
 * Entertainment: The bot provides users with a fun and interactive way to spend time with friends or community members.
