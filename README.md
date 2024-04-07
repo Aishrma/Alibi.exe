@@ -61,6 +61,39 @@ python3 main.py
 ```
 This will prompt the user to select their desired game.
 Enter the number of your choice and continue with the game.
+1. Murder Mystery -
+   * Once you choose Murder mystery you will be provided with the option to choose from 10 mysteries. Type in the desired number.
+   * You will now have to select a reaction from the options based on the answer you wish to give
+   * clicking on the cross will exit from the game
+2. Scramble -
+   * once you choose scramble you will be asked to descramble the given words using the hints
+   * type in the right answer 
+3. Hangman -
+   * once you choose hangman you will be given the number of letters in the word.
+   * for guessing a letter type in 
+```
+!guess (your guess)
+```
+   * typing in  
+```
+exit
+```
+will end the game <br/>
+
+4. Morse -
+  * After choosing it questions will be displayed type the respective answers
+  * typing in  
+```
+exit
+```
+will end the game  <br/>
+5. Caesar Cipher -
+* After choosing it questions will be displayed type the respective answers
+*  typing in  
+```
+exit
+```
+will end the game 
 
 # Deployment
 The discord bot is deployed on Github and Discord.
