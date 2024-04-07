@@ -11,9 +11,55 @@ from href_crimescenes import images_list
 from href_sync import sync_list
 from href_title import title_list
 from jumbled_words import jumbled_list
+from href_first import first_list
 
 # Import hangman game related modules
 from discord.ext import commands
+morse_phrases = {
+    "detective": "-.. . - - . - .. ... -.-. .",
+    "suspect": "... ..- ... .--. . -.-.",
+    "victim": "...- .. -.-. - .. --",
+    "clue": "-.-. .-.. ..- .",
+    "alibi": ".- .-.. .. -... ..",
+    "interrogation": ".. -. - . .-. .-. --- --. .- - .. --- -. .- - .. --- -.",
+    "evidence": ". ...- .. -.-. .. -. -.. .",
+    "conspiracy": "-.-. --- -. ... .. - .--. .-. .. - -.--",
+    "motive": "-- --- - .. ... .",
+    "weapon": ".-- . .--. .- -.",
+    "autopsy": ".- ..- - --- .--. ... -.--",
+    "forensics": "..-. --- .-. . -. ... .. -.-. ...",
+    "fingerprint": "..-. .. -. --. .-. .. -. -.. . ... -.-.",
+    "bloodstain": "-... .-.. --- --- -.. ... - .- .. -.",
+    "confession": "-.-. --- -. ..-. .- ... ... .. --- -. ",
+    "guilty": "--. ..- .. .-.. - -.--",
+    "innocent": ".. -. -. --- -.-. . -. -",
+    "accomplice": ".- -.-. -.-. --- -- .--. .-.. .. -.-. .",
+    "blackmail": "-... .-.. .- -.-. -.- -- .- .. .-..",
+    "extortion": ". -..- - --- .-. - .. --- .-.",
+    "threat": "- .... .-. . .- -",
+    "secret": "... . -.-. .-. . -",
+    "diary": "-.. .. .- .-. -.--",
+    "hidden room": ".... .. -.. -.. . -. .-.-.- .-. --- --- --",
+    "locked door": ".-.. --- -.-. -.- . -.. -.. --- .-. ",
+    "disguise": "-.. .. ... --. ..- .. ... .",
+    "witness": ".-- .. -. . - ... ...",
+    "flashback": "..-. .-.. .- ... .... -... .- -.-.",
+    "intuition": ".. -. - .. ..- - .. --- -.",
+    "deduction": "-.. . -.. .. -.-. - .. --- -.",
+    "logic": ".-.. --- --. .. -.-.",
+    "amateur sleuth": ".- -- .- - ..- .-. ... .-.. . ..- - ....",
+    "investigator": ".. -. ... . ... - .. ... ... ..- .--. .- -.",
+    "police": ".--. --- .-.. .. -.-. .",
+    "profiler": ".--. .-. --- .. ..-. .-.. . .-.",
+    "killer": "-.- .. .-.. .-.. . .-.",
+    "crime scene": "-.-. .-. .. -- . / ... -.-. . -. .",
+    "trial": "- .-. .. .- .-..",
+    "justice": ".--- ..- ... - .. -.-. .",
+    "jury": ".--- ..- .-. -.--",
+    "verdict": "...- . .-. -.- .. -.. -",
+    "cliffhanger": "-.-. .-.. .. .. ..-. .... .- -. --. . .-.",
+    "suspense": "... ..- ... .--. . ... ."
+}
 
 # List of words for the game
 words = [
@@ -34,7 +80,13 @@ words = [
 ]
 
 # Hangman art
-hangman_art = ["h0.jpg", "h1.jpg", "h2.jpg", "h3.jpg", "h4.jpg", "h5.jpg", "h6.jpg"]
+hangman_art = ["images_hangman/h0.jpg",
+    "images_hangman/h1.jpg",
+    "images_hangman/h2.jpg",
+    "images_hangman/h3.jpg",
+    "images_hangman/h4.jpg",
+    "images_hangman/h5.jpg",
+    "images_hangman/h6.jpg"]
 
 load_dotenv()
 
@@ -56,9 +108,10 @@ async def on_ready():
 @client.command()
 async def start(ctx):
     await ctx.send('''Hey! Welcome to the world of puzzles! Choose the type of puzzle you want to solve today by entering the corresponding number:''')
-    await ctx.send("1. Murder Mystery")
-    await ctx.send("2. Scramble")
-    await ctx.send("3. Hangman")
+    await ctx.send("1. Murder Mystery", file=discord.File(first_list[3]))
+    await ctx.send("2. Scramble", file=discord.File(first_list[4]))
+    await ctx.send("3. Hangman", file=discord.File(first_list[1]))
+    await ctx.send("4. Morse Decoder", file=discord.File(first_list[2]))
 
     def check(message):
         return message.author == ctx.author and message.channel == ctx.channel
@@ -73,6 +126,8 @@ async def start(ctx):
             await scramble(ctx)
         elif choice == 3:
             await start_hangman(ctx)
+        elif choice ==4:
+            await morse(ctx)
         else:
             await ctx.send("Invalid choice. Please enter either '1', '2', or '3'.")
     except asyncio.TimeoutError:
@@ -250,7 +305,7 @@ async def start_hangman(ctx):
     word = random.choice(words)
     guessed_letters = []
     initial_word = "-" * len(word)
-    await ctx.send(f"Let's play Hangman! The word is {len(word)} letters long.\n{initial_word}")
+    await ctx.send(f"Let's play Hangman! The word is {len(word)} letters long.\n{initial_word} type in your letter after !guess ")
 
 # Function to handle player guesses during the hangman game
 @client.command()
@@ -261,14 +316,16 @@ async def guess(ctx, letter):
         return
 
     letter = letter.lower()
+    if letter == "exit":
+        await ctx.send("Game ended.")
+        game_active = False
+        return
     if letter in guessed_letters:
         await ctx.send("You already guessed that letter. Try again!")
         return
     
     guessed_letters.append(letter)
-    updated_word = ''.join([char if char in guessed_letters else '-' for char
-
- in word])
+    updated_word = ''.join([char if char in guessed_letters else '-' for char in word])
 
     if updated_word == word:
         await ctx.send(f"Congratulations! You guessed the word: {word}")
@@ -285,5 +342,33 @@ async def guess(ctx, letter):
         else:
             await ctx.send("Right guess!")
             await ctx.send(updated_word)
+
+async def morse(ctx):
+    count = 0
+    for _ in range(5):
+        # Randomly select a phrase from the dictionary
+        phrase, morse_text = random.choice(list(morse_phrases.items()))
+        
+        await ctx.send(f'Your Morse code is: {morse_text}')
+
+        def check(msg):
+            return msg.author == ctx.author and msg.channel == ctx.channel
+
+        try:
+            response = await client.wait_for('message', check=check, timeout=50)
+            if response.content.lower() == "exit":
+                await ctx.send("Game ended.")
+                break
+            elif response.content.upper() == phrase.upper():
+                count = count + 1
+                await ctx.send("Correct! You win this round!")
+            else:
+                await ctx.send("Incorrect! Try again.")
+        except asyncio.TimeoutError:
+            await ctx.send("Time's up for this round! You lose.")
+
+    await ctx.send(f"The game has ended after 5 rounds. Your total score is {count} points.\nThanks for playing!")
+
+
 
 client.run(os.getenv('TOKEN'))
