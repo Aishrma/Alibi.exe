@@ -1,0 +1,12 @@
+title_list=[
+    "images_title/title1.png",
+    "images_title/title2.png",
+    "images_title/title3.png",
+    "images_title/title4.png",
+    "images_title/title5.png",
+    "images_title/title6.png",
+    "images_title/title7.png",
+    "images_title/title8.png",
+    "images_title/title9.png",
+    "images_title/title10.png"  
+]
