@@ -1,3 +1,4 @@
+
 import discord
 import os
 from discord.ext import commands
@@ -11,12 +12,10 @@ from href_sync import sync_list
 from href_title import title_list
 from jumbled_words import jumbled_list
 
-load_dotenv()
+# Import hangman game related modules
+from discord.ext import commands
 
-intents = discord.Intents.default()
-intents.message_content = True  # Required for message content
-intents.reactions = True  # Required for adding reactions
-client = commands.Bot(command_prefix="!", intents=intents)
+# List of words for the game
 words = [
     "detective", "suspect", "victim", "clue", "alibi",
     "interrogation",  "evidence", "conspiracy", "motive",
@@ -35,15 +34,21 @@ words = [
 ]
 
 # Hangman art
-hangman_art = ["hangman0.png", "hangman1.png", "hangman2.png", "hangman3.png", "hangman4.png", "hangman5.png", "hangman6.png"]
+hangman_art = ["h0.jpg", "h1.jpg", "h2.jpg", "h3.jpg", "h4.jpg", "h5.jpg", "h6.jpg"]
+
+load_dotenv()
+
+intents = discord.Intents.default()
+intents.message_content = True  # Required for message content
+intents.reactions = True  # Required for adding reactions
+client = commands.Bot(command_prefix="!", intents=intents)
+
 questions = questions_list
 jumbled = jumbled_list
 
-game_active = False
 word = None
 guessed_letters = []
 wrong =0
-
 @client.event
 async def on_ready():
     print(f'We have logged in as {client.user}')
@@ -53,7 +58,7 @@ async def start(ctx):
     await ctx.send('''Hey! Welcome to the world of puzzles! Choose the type of puzzle you want to solve today by entering the corresponding number:''')
     await ctx.send("1. Murder Mystery")
     await ctx.send("2. Scramble")
-    await ctx.send("3, Hangman")
+    await ctx.send("3. Hangman")
 
     def check(message):
         return message.author == ctx.author and message.channel == ctx.channel
@@ -67,9 +72,9 @@ async def start(ctx):
         elif choice == 2:
             await scramble(ctx)
         elif choice == 3:
-            await hangman(ctx)
+            await start_hangman(ctx)
         else:
-            await ctx.send("Invalid choice. Please enter either '1' or '2'.")
+            await ctx.send("Invalid choice. Please enter either '1', '2', or '3'.")
     except asyncio.TimeoutError:
         await ctx.send("Sorry, you took too long to respond. Please try again.")
 
@@ -196,7 +201,6 @@ async def final_answer(channel, author, ctx, q1, i):
             await channel.send("❌ Incorrect!")
     await channel.send(solution[i])
 
-
 async def scramble(ctx):
     await ctx.send('''Welcome!''')
 
@@ -239,19 +243,22 @@ async def ask_question(channel, author, ctx):
             await channel.send("Congratulations! You have completed the game.")
             break
 
-async def hangman(ctx):
-    global game_active, word, guessed_letters, wrong
+# Function to start the hangman game
+async def start_hangman(ctx):
+    global game_active, word, guessed_letters
+    game_active = True
     word = random.choice(words)
     guessed_letters = []
     initial_word = "-" * len(word)
     await ctx.send(f"Let's play Hangman! The word is {len(word)} letters long.\n{initial_word}")
-    game_active = True
 
-    
+# Function to handle player guesses during the hangman game
+@client.command()
+async def guess(ctx, letter):
+    global game_active, word, guessed_letters, wrong
     if not game_active:
         await ctx.send("No game is currently active. Start a new game using !start.")
         return
-
 
     letter = letter.lower()
     if letter in guessed_letters:
@@ -259,7 +266,9 @@ async def hangman(ctx):
         return
     
     guessed_letters.append(letter)
-    updated_word = ''.join([char if char in guessed_letters else '-' for char in word])
+    updated_word = ''.join([char if char in guessed_letters else '-' for char
+
+ in word])
 
     if updated_word == word:
         await ctx.send(f"Congratulations! You guessed the word: {word}")
