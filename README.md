@@ -2,9 +2,9 @@
 Arcade Discord Bot
 
 # Contributors
-Aishwarya Sharma\n
-Subikshaa Sakthivel\n
-Kavya Gupta\n
+Aishwarya Sharma
+Subikshaa Sakthivel
+Kavya Gupta
 
 # Problem Statement
 Detective games are popular forms of entertainment that challenge players' deductive reasoning skills. However, organizing and hosting such games in a physical setting can be time-consuming and resource-intensive. To address this, we've built a Discord bot project centered around a discord arcade theme, introducing a single-player mystery game within the Discord environment. While not aimed at addressing societal issues , the project integrates a mystery game and some mini games to encourage prolonged engagement with the platform. Our mini-games offer a thrilling mix of code-breaking challenges and brain teasers. Half of which involve using real-world encryption methods to decipher secret messages, while the others test your vocabulary and thinking skills.
