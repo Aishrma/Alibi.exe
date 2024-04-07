@@ -55,6 +55,8 @@ Run the bot by executing the `main.py` file using the command
 ```
 python3 main.py
 ```
+## Invite Link
+Invite link to add our bot to your server is [this](https://discord.com/oauth2/authorize?client_id=1226537919439831161&permissions=0&scope=bot)
 ## To run the bot in the discord server, follow these instructions:
 ```
 !start
