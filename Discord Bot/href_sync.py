@@ -1,0 +1,12 @@
+sync_list=[
+    "images_sync/blur1.png",
+    "images_sync/blur2.png",
+    "images_sync/blur3.png",
+    "images_sync/blur4.png",
+    "images_sync/blur5.png",
+    "images_sync/blur6.png",
+    "images_sync/blur7.png",
+    "images_sync/blur8.png",
+    "images_sync/blur9.png",
+    "images_sync/blur10.png" 
+]
