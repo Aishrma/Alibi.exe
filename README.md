@@ -49,11 +49,18 @@ Our goal is to provide Discord users with a fun and engaging gaming experience w
   * server_website
 
 # How to run
+## To set up the bot in yourlocal machine, follow these instructions:
 Set up environment variables by creating a `.env` file in the project directory and adding your Discord bot token.<br/>
 Run the bot by executing the `main.py` file using the command
 ```
 python3 main.py
 ```
+## To run the bot in the discord server, follow these instructions:
+```
+!start
+```
+This will prompt the user to select their desired game.
+Enter the number of your choice and continue with the game.
 
 # Deployment
 The discord bot is deployed on __________
