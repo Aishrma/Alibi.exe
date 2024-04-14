@@ -29,10 +29,9 @@ Our goal is to provide Discord users with a fun and engaging gaming experience w
 * Message Reactions: Users can express their responses to riddles using message reactions.
 
 # Tech Stack
-* Frontend
-  * css
 * Languages
   * python
+  * css
 * Libraries/Framework
   * random
   * asyncio
